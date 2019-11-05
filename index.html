@@ -15,6 +15,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <!-- Handles the auto-complete search box -->
+    <script src="autocomplete-search.js"></script>
   </head>
 
 
@@ -26,6 +29,14 @@
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
       <div class="row">
         <h1>Name of Page</h1>
+
+        <div id="organization-auto-complete"> 
+          <input id="organization-search-box" class="form-control" type="text" value="" autofocus="true" name="search" placeholder="Search"></input> 
+          <div id="results"> 
+            <div id="autocomplete-results"> </div>
+          </div> 
+        </div>
+
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis quam sed neque imperdiet, eu consectetur orci ultricies. Sed interdum efficitur metus vel mollis. Quisque hendrerit quam nec neque vulputate, a faucibus odio dignissim. Pellentesque blandit pretium lorem quis mattis. Sed porttitor imperdiet diam, vel maximus dolor hendrerit quis. Proin ornare turpis vitae nisl egestas sagittis. Quisque blandit lacus a sodales interdum. Maecenas condimentum, ante vitae imperdiet rhoncus, justo nibh vehicula lacus, eget tempor ex sem eu tellus. Proin et laoreet tellus, non tristique elit. Ut nec aliquam quam, id posuere ligula. Nam sodales, leo ac tincidunt imperdiet, enim est suscipit risus, et venenatis metus velit id neque. Nunc porttitor porttitor lectus.
 
