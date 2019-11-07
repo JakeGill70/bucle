@@ -10,6 +10,8 @@ $(document).ready(function(){
     var autocomplete_results = document.getElementById('autocomplete-results');
     var source_to_show;
     var results;
+
+    input.style.fontStyle = 'oblique';
     
     var autocomplete= function(val) {
       var source_return = [];
