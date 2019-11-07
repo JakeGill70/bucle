@@ -1,5 +1,7 @@
 .container{
     background-color: #A2AAAD;
+    border-radius: 2em;
+    margin-top:1em;
 }
 
 body{
