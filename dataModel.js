@@ -12,11 +12,10 @@ function Organization(name){
     this.name = name.toLowerCase() // Force the organization name to lower case so that is can be used in autocomplete-search.js
 }
 
-function Meeting(organization, title, date, time){
+function Meeting(organization, title, dateTime){
     this.organization = organization,
     this.title = title,
-    this.date = date,
-    this.time = time,
+    this.dateTime = dateTime,
     this.id = function(){ return (CryptoJS.MD5("meeting"+this.title+this.date+this.time));}
 }
 
