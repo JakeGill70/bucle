@@ -19,9 +19,8 @@ function Meeting(organization, title, dateTime){
     this.id = function(){ return (CryptoJS.MD5("meeting"+this.title+this.date+this.time));}
 }
 
-function Agenda(meetingID, title){
+function Agenda(meetingID){
     this.meetingID = meetingID,
-    this.title = title,
     this.id = function(){ return (CryptoJS.MD5("agenda"+this.title+this.meeting));}
 }
 
