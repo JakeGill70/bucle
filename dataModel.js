@@ -9,45 +9,51 @@ One Vote -> One User
 */
 
 function Organization(name){
-    this.name = name,
-    this.meetings = [],
-    this.users = []
+    this.name = name.toLowerCase() // Force the organization name to lower case so that is can be used in autocomplete-search.js
 }
 
-function Meeting(title, date, time, agenda){
+function Meeting(organization, title, date, time){
+    this.organization = organization,
     this.title = title,
     this.date = date,
     this.time = time,
-    this.agenda = agenda
+    this.id = function(){ return (CryptoJS.MD5("meeting"+this.title+this.date+this.time));}
 }
 
-function Agenda(title){
+function Agenda(meetingID, title){
+    this.meetingID = meetingID,
     this.title = title,
-    this.items = []
+    this.id = function(){ return (CryptoJS.MD5("agenda"+this.title+this.meeting));}
 }
 
-function Item(content){
+function Item(agendaID, content){
+    this.agendaID = agendaID,
     this.content = content,
-    this.motions = []
+    this.id = function(){ return (CryptoJS.MD5("item"+this.agendaID+this.content));}
 }
 
-function Motion(motionedBy, secondedBy, content){
+function Motion( itemID, motionedBy, secondedBy, content, requiresVote){
+    this.itemID = itemID,
     this.motionedBy = motionedBy, // User who created the motion
     this.secondedBy = secondedBy, // User who seconded the motion
     this.content = content,
-    this.votes = []
+    this.requiresVote = requiresVote,
+    this.id = function(){ return (CryptoJS.MD5("motion"+this.itemID+this.content));}
 }
 
-function Vote(user, vote){
+function Vote(motionID, user, vote){
+    this.motionID = motionID,
     this.user = user, // Person who cast vote
     this.vote = vote // How did they vote? [Yes | No | Present]
 }
 
-function User(firstName, lastName, emailAddress, password){
+function User(organization, firstName, lastName, emailAddress, password){
+    this.organization = organization,
     this.firstName = firstName,
     this.lastName = lastName,
     this.fullName = function(){returns (this.firstName + " " + this.lastName);},
     this.emailAddress = emailAddress,
     this.password = password,
-    this.uid = function(){returns (CryptoJS.MD5(this.fullName() + this.emailAddress)); }
+    this.id = function(){returns (CryptoJS.MD5(this.fullName() + this.emailAddress)); },
+    this.userRole = "member"
 }
