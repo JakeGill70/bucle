@@ -25,6 +25,7 @@
     <!-- TODO: Delete this once real data becomes available -->
     <script>
     var tdata = DataStorage.getTestData();
+    tdata.meetings.sort((m1, m2) => {return m2.dateTime.getTime() - m1.dateTime.getTime();});
     var tdataJSON = DataStorage.toJSON(tdata);
     console.log(tdata);
     DataStorage.setData("db", tdataJSON);
