@@ -16,8 +16,26 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+    <!-- Handles Data Storage -->
+    <script src="md5.min.js"></script>
+    <script src="dataModel.js"></script>
+    <script src="dataStorage.js"></script>
+
+    <!-- Used to create test data -->
+    <!-- TODO: Delete this once real data becomes available -->
+    <script>
+    var tdata = DataStorage.getTestData();
+    var tdataJSON = DataStorage.toJSON(tdata);
+    console.log(tdata);
+    DataStorage.setData("db", tdataJSON);
+
+    var tdataReturn = DataStorage.fromJSON(DataStorage.getData("db"));
+    console.log(tdataReturn);
+    </script>
+
     <!-- Handles the auto-complete search box -->
     <script src="autocomplete-search.js"></script>
+    
   </head>
 
 

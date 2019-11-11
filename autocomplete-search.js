@@ -2,8 +2,13 @@
 
 $(document).ready(function(){
 
-    // TODO: Base these keywords off of the dataStorage organizations
-    var keywords = ["etsu faculty senate", "unicoi county commission", "etsu acm", "etsu faculty kick ball league"];
+    var keywords = [];
+    var orgs = DataStorage.fromJSON(DataStorage.getData("db")).organizations;
+    for(let i=0; i < orgs.length; i++){
+      keywords.push(orgs[i].name);
+    }
+    
+    console.log(keywords);
     
     var searchbox = document.getElementById('organization-auto-complete');
     var input = document.getElementById('organization-search-box');
@@ -35,7 +40,6 @@ $(document).ready(function(){
       input_val = input.value.toLowerCase();
       input.style.fontStyle = 'normal';
       input_val.slice();
-      console.log('d');
     
       if (input.value === '') {
         input.style.fontStyle = 'oblique';
@@ -57,7 +61,7 @@ $(document).ready(function(){
         //$('#results').css('display', 'block');
     
         $('#results li a').click(function(){
-          input.value = this.text;
+          input.value = "";
         });
     
         
