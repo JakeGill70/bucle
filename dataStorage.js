@@ -25,7 +25,7 @@ var DataStorage = {
         meetings.push(new Meeting(organizations[0].name, "General Session Meeting",    new Date("2019/02/16 16:00")));
         meetings.push(new Meeting(organizations[0].name, "Special Budgetary Meeting",  new Date("2019/03/24 16:00")));
         meetings.push(new Meeting(organizations[0].name, "General Session Meeting",    new Date("2019/06/22 17:30")));
-        meetings.push(new Meeting(organizations[0].name, "General Session Meeting",    new Date("2019/11/4 16:00")));
+        meetings.push(new Meeting(organizations[0].name, "General Session Meeting",    new Date("2019/11/04 16:00")));
 
         // Create Agendas
         agendas.push(new Agenda(meetings[0].id, meetings[0].title));
