@@ -2,6 +2,7 @@
 
 $(document).ready(function(){
 
+    // TODO: Base these keywords off of the dataStorage organizations
     var keywords = ["etsu faculty senate", "unicoi county commission", "etsu acm", "etsu faculty kick ball league"];
     
     var searchbox = document.getElementById('organization-auto-complete');
@@ -49,7 +50,7 @@ $(document).ready(function(){
         source_to_show = autocomplete(input_val.split(" "));
         
         for (i = 0; i < source_to_show.length; i++) {
-          autocomplete_results.innerHTML += '<li class="list-group-item"><a>' + source_to_show[i] + '</a></li>';
+          autocomplete_results.innerHTML += '<li class="list-group-item"><a href="./organization.html?org=' + encodeURI(source_to_show[i]) + '" >' + source_to_show[i] + '</a></li>';
           //alert(source_to_show[i]);
         }
         
