@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <title>bucle</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="styleSheet" href="Bucle.css">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <!-- Handles getting URL parameters -->
+    <script src="getURLparams.js"></script>
+
+    <!-- Handles Data Storage -->
+    <script src="md5.min.js"></script>
+    <script src="dataModel.js"></script>
+    <script src="dataStorage.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        var db = DataStorage.fromJSON(DataStorage.getData("db"));
+        var orgName = decodeURI(getURLparams()["org"]);
+        var meetingID = decodeURI(getURLparams()["meeting"]);
+
+        // Create breadcrumbs
+        // BUCLE
+        document.getElementById("bucleCrumb").innerHTML = '<a href="index.html">BUCLE</a>';
+        // Organization
+        var orgStr = '<a href="./organization.html?org=' + orgName.toLowerCase() + '">';
+        orgStr += orgName.toUpperCase() + '</a>';
+        document.getElementById("orgNameCrumb").innerHTML = orgStr;
+        // Meeting
+        var meetingNameStr = db.meetings.find(obj => {return obj.id === meetingID}).title.toUpperCase();
+        document.getElementById("meetingNameCrumb").innerHTML = meetingNameStr;
+
+        // Agenda
+        var agenda = db.agendas.find(obj => {return obj.meetingID === meetingID});
+        var items = db.items.filter(obj => {return obj.agendaID === agenda.id});
+        let agendaStr = '<ol>';
+        for(let i=0; i < items.length; i++){
+          agendaStr += '<li>' + items[i].content;
+          var motions = db.motions.filter(obj => {return obj.itemID === items[i].id});
+          agendaStr += '<ul>'
+          for(let c=0; c<motions.length; c++){
+            var motionedBy = db.users.find(obj => {return obj.id === motions[c].motionedBy});
+            var secondedBy = db.users.find(obj => {return obj.id === motions[c].secondedBy});
+
+            agendaStr += '<li>' + motions[c].content;
+
+            agendaStr += '<ul><li> Motion proposed by: ' + motionedBy.fullName; 
+            agendaStr += '</li><li>Motion seconded by: ' + secondedBy.fullName; 
+            agendaStr += '</li></ul></li>';
+          }
+          agendaStr += '</ul></li>';
+        }
+        agendaStr += '</ol>';
+        document.getElementById("itemsRow").innerHTML = agendaStr;
+      });
+    </script>
+
+  </head>
+
+
+  <body>
+    <noscript>
+      <strong>We're sorry but bucle doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+      <div class="row">
+        <h1>
+          <span id="bucleCrumb"></span> | <span id="orgNameCrumb"></span> | <span id="meetingNameCrumb"></span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+      <div id="actionRow" class="row" style="text-align: center;">
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#makeMotion-modal">Make Motion</button>
+      </div>
+    </div>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+        <div id="itemsRow" class="row">
+
+        </div>
+      </div>
+
+  </body>
+
+  <!-- Make Motion -->
+  <div class="modal fade" id="makeMotion-modal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Modal Window Title -->
+          <h4 class="modal-title">Make a Motion</h4>
+        </div>
+        <!-- Modal Window Body -->
+        <div class="modal-body">
+          <form class="form-group">
+            <label>Item </label><br>
+            <select>
+              <option>Item 1</option>
+              <option>Item 2</option>
+              <option>Item 3</option>
+            </select>
+            <br>
+            <label>Requires Vote <input type="checkbox" value="requiresVote"></label>
+            <br>
+            <label>Content </label>
+            <textarea style="max-width:100%; min-width:100%; min-height:3em; max-height:30em;" class="form-control" rows="5" id="motion-content"></textarea>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Make Motion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</html>
