@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <title>bucle</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="styleSheet" href="Bucle.css">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <!-- Handles getting URL parameters -->
+    <script src="getURLparams.js"></script>
+
+    <!-- Handles Data Storage -->
+    <script src="md5.min.js"></script>
+    <script src="dataModel.js"></script>
+    <script src="dataStorage.js"></script>
+
+  </head>
+
+
+  <body>
+    <noscript>
+      <strong>We're sorry but bucle doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+      <div class="row">
+        <h1>
+          <a href="index.html">BUCLE</a> 
+          | 
+          <script>document.write(decodeURI(getURLparams()["org"]).toUpperCase());</script>
+        </h1>
+      </div>
+    </div>
+
+  </body>
+
+</html>
