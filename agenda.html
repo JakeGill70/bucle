@@ -24,6 +24,41 @@
     <script src="dataModel.js"></script>
     <script src="dataStorage.js"></script>
 
+    <script>
+      $(document).ready(function(){
+        var db = DataStorage.fromJSON(DataStorage.getData("db"));
+        var orgName = decodeURI(getURLparams()["org"]);
+        var meetingID = decodeURI(getURLparams()["meeting"]);
+
+        // Create breadcrumbs
+        // BUCLE
+        document.getElementById("bucleCrumb").innerHTML = '<a href="index.html">BUCLE</a>';
+        // Organization
+        var orgStr = '<a href="./organization.html?org=' + orgName.toLowerCase() + '">';
+        orgStr += orgName.toUpperCase() + '</a>';
+        document.getElementById("orgNameCrumb").innerHTML = orgStr;
+        // Meeting
+        var meetingNameStr = db.meetings.find(obj => {return obj.id === meetingID}).title.toUpperCase();
+        document.getElementById("meetingNameCrumb").innerHTML = meetingNameStr;
+
+        // Agenda
+        var agenda = db.agendas.find(obj => {return obj.meetingID === meetingID});
+        var items = db.items.filter(obj => {return obj.agendaID === agenda.id});
+        let agendaStr = '<ol>';
+        for(let i=0; i < items.length; i++){
+          agendaStr += '<li>' + items[i].content;
+          var motions = db.motions.filter(obj => {return obj.itemID === items[i].id});
+          agendaStr += '<ul>'
+          for(let c=0; c<motions.length; c++){
+            agendaStr += '<li>' + motions[c].content + '</li>';
+          }
+          agendaStr += '</ul></li>';
+        }
+        agendaStr += '</ol>';
+        document.getElementById("itemsRow").innerHTML = agendaStr;
+      });
+    </script>
+
   </head>
 
 
@@ -35,12 +70,16 @@
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
       <div class="row">
         <h1>
-          <a href="index.html">BUCLE</a> 
-          | 
-          <script>document.write(decodeURI(getURLparams()["org"]).toUpperCase());</script>
+          <span id="bucleCrumb"></span> | <span id="orgNameCrumb"></span> | <span id="meetingNameCrumb"></span>
         </h1>
       </div>
     </div>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+        <div id="itemsRow" class="row">
+
+        </div>
+      </div>
 
   </body>
 
