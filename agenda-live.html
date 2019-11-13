@@ -25,11 +25,12 @@
     <script src="dataStorage.js"></script>
 
     <script>
+      var db = DataStorage.fromJSON(DataStorage.getData("db"));
+      var orgName = decodeURI(getURLparams()["org"]);
+      var meetingID = decodeURI(getURLparams()["meeting"]);
+      
       $(document).ready(function(){
-        var db = DataStorage.fromJSON(DataStorage.getData("db"));
-        var orgName = decodeURI(getURLparams()["org"]);
-        var meetingID = decodeURI(getURLparams()["meeting"]);
-
+        
         // Create breadcrumbs
         // BUCLE
         document.getElementById("bucleCrumb").innerHTML = '<a href="index.html">BUCLE</a>';
@@ -55,7 +56,7 @@
 
             agendaStr += '<li>' + motions[c].content;
 
-            agendaStr += '<ul><li> Motion proposed by: ' + motionedBy.fullName; 
+            agendaStr += '<ul><li>Motion proposed by: ' + motionedBy.fullName; 
             agendaStr += '</li><li>Motion seconded by: ' + secondedBy.fullName; 
             agendaStr += '</li></ul></li>';
           }
@@ -63,7 +64,24 @@
         }
         agendaStr += '</ol>';
         document.getElementById("itemsRow").innerHTML = agendaStr;
+
+        var motionItemsStr = "";
+        for(let i=0; i < items.length; i++){
+          motionItemsStr += '<option>' + items[i].content + "</option>";
+        }
+        document.getElementById("motion-modal-items").innerHTML = motionItemsStr;
       });
+
+      function addMotion(){
+        let itemContent = document.getElementById("motion-modal-items").value;
+        let itemId = db.items.find(obj => {return obj.content === itemContent;}).id;
+        let motionContent = document.getElementById("motion-content").value;
+        let motionRequiresVote = document.getElementById("motion-RequiresVote");
+        let m = new Motion(itemId, undefined, undefined, motionContent, motionRequiresVote);
+        db.motions.addMotion(m);
+        DataStorage.setData("db", DataStorage.toJSON(db));
+        location.reload();
+      }
     </script>
 
   </head>
@@ -107,15 +125,12 @@
         </div>
         <!-- Modal Window Body -->
         <div class="modal-body">
-          <form class="form-group">
+          <form class="form-group" id="addMotionForm">
             <label>Item </label><br>
-            <select>
-              <option>Item 1</option>
-              <option>Item 2</option>
-              <option>Item 3</option>
+            <select id="motion-modal-items">
             </select>
             <br>
-            <label>Requires Vote <input type="checkbox" value="requiresVote"></label>
+            <label>Requires Vote <input id="motion-RequiresVote" type="checkbox" value="requiresVote"></label>
             <br>
             <label>Content </label>
             <textarea style="max-width:100%; min-width:100%; min-height:3em; max-height:30em;" class="form-control" rows="5" id="motion-content"></textarea>
@@ -123,7 +138,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Make Motion</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addMotion()">Make Motion</button>
         </div>
       </div>
     </div>
