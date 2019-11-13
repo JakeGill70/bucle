@@ -30,8 +30,8 @@
     console.log(tdata);
     DataStorage.setData("db", tdataJSON);
 
-    var tdataReturn = DataStorage.fromJSON(DataStorage.getData("db"));
-    console.log(tdataReturn);
+    var db = DataStorage.fromJSON(DataStorage.getData("db"));
+    console.log(db);
     </script>
 
     <!-- Handles the auto-complete search box -->
