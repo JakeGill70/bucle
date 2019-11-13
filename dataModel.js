@@ -16,18 +16,18 @@ function Meeting(organization, title, dateTime){
     this.organization = organization,
     this.title = title,
     this.dateTime = dateTime,
-    this.id = function(){ return (md5("meeting"+this.title+this.date+this.time));}
+    this.id = (md5("meeting"+this.title+this.date+this.time))
 };
 
 function Agenda(meetingID){
     this.meetingID = meetingID,
-    this.id = function(){ return (md5("agenda"+this.title+this.meeting));}
+    this.id = (md5("agenda"+this.title+this.meeting))
 };
 
 function Item(agendaID, content){
     this.agendaID = agendaID,
     this.content = content,
-    this.id = function(){ return (md5("item"+this.agendaID+this.content));}
+    this.id = (md5("item"+this.agendaID+this.content))
 };
 
 function Motion( itemID, motionedBy, secondedBy, content, requiresVote){
@@ -36,7 +36,7 @@ function Motion( itemID, motionedBy, secondedBy, content, requiresVote){
     this.secondedBy = secondedBy, // User who seconded the motion
     this.content = content,
     this.requiresVote = requiresVote,
-    this.id = function(){ return (md5("motion"+this.itemID+this.content));}
+    this.id = (md5("motion"+this.itemID+this.content))
 };
 
 function Vote(motionID, user, vote){
@@ -49,9 +49,9 @@ function User(organization, firstName, lastName, emailAddress, password){
     this.organization = organization,
     this.firstName = firstName,
     this.lastName = lastName,
-    this.fullName = function(){returns (this.firstName + " " + this.lastName);},
+    this.fullName = (this.firstName + " " + this.lastName),
     this.emailAddress = emailAddress,
     this.password = password,
-    this.id = function(){returns (md5(this.fullName() + this.emailAddress)); },
+    this.id = (md5(this.fullName + this.emailAddress))
     this.userRole = "member"
 };
