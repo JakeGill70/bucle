@@ -50,7 +50,14 @@
           var motions = db.motions.filter(obj => {return obj.itemID === items[i].id});
           agendaStr += '<ul>'
           for(let c=0; c<motions.length; c++){
-            agendaStr += '<li>' + motions[c].content + '</li>';
+            var motionedBy = db.users.find(obj => {return obj.id === motions[c].motionedBy});
+            var secondedBy = db.users.find(obj => {return obj.id === motions[c].secondedBy});
+
+            agendaStr += '<li>' + motions[c].content;
+
+            agendaStr += '<ul><li> Motion proposed by: ' + motionedBy.fullName; 
+            agendaStr += '</li><li>Motion seconded by: ' + secondedBy.fullName; 
+            agendaStr += '</li></ul></li>';
           }
           agendaStr += '</ul></li>';
         }
