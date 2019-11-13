@@ -14,7 +14,9 @@ var DataStorage = {
         organizations.push(new Organization("etsu faculty senate"));
 
         // Create users
-        users.push((new User(organizations[0].name, "Stephen",  "Hendrix",      "hendrixs@etsu.edu",        "password1").userRole = "chairperson"));
+        var chairperson = new User(organizations[0].name, "Stephen",  "Hendrix",      "hendrixs@etsu.edu",        "password1");
+        chairperson.userRole = "chairperson";
+        users.push(chairperson);
         users.push( new User(organizations[0].name, "Bill",     "Burr",         "billyBurr@gmail.com",      "myGreatPassword1"));
         users.push( new User(organizations[0].name, "Ronald",   "Funches",      "ronFunches73@etsu.edu",    "that_guy_h8s_linda"));
         users.push( new User(organizations[0].name, "Sarah",    "Silverman",    "silvermans12@etsu.edu",    "hokey_didISayThat94comedy"));
@@ -51,10 +53,10 @@ var DataStorage = {
 
         // Create Motions
         motions.push(new Motion(items[2].id, users[0].id, users[1].id, "Roll Call", false));
-        motions.push(new Motion(items[3].id, users[0], users[3], "Mayor $48,433.13", true));
-        motions.push(new Motion(items[3].id, users[0], users[3], "Circuit Court $24,835.00", true));
-        motions.push(new Motion(items[3].id, users[0], users[3], "Highway Department $5,000", true));
-        motions.push(new Motion(items[5].id, users[0], users[2], "Meeting adjourned", false));
+        motions.push(new Motion(items[3].id, users[0].id, users[3].id, "Mayor $48,433.13", true));
+        motions.push(new Motion(items[3].id, users[0].id, users[3].id, "Circuit Court $24,835.00", true));
+        motions.push(new Motion(items[3].id, users[0].id, users[3].id, "Highway Department $5,000", true));
+        motions.push(new Motion(items[5].id, users[0].id, users[2].id, "Meeting adjourned", false));
 
         // Package Results
         var dataStorage = { "organizations" : organizations, "users" : users, "meetings" : meetings, "agendas" : agendas, "items" : items, "motions" : motions};
