@@ -2,7 +2,13 @@
 
 $(document).ready(function(){
 
-    var keywords = ["etsu faculty senate", "unicoi county commission", "etsu acm", "etsu faculty kick ball league"];
+    var keywords = [];
+    var orgs = DataStorage.fromJSON(DataStorage.getData("db")).organizations;
+    for(let i=0; i < orgs.length; i++){
+      keywords.push(orgs[i].name);
+    }
+    
+    console.log(keywords);
     
     var searchbox = document.getElementById('organization-auto-complete');
     var input = document.getElementById('organization-search-box');
@@ -34,7 +40,6 @@ $(document).ready(function(){
       input_val = input.value.toLowerCase();
       input.style.fontStyle = 'normal';
       input_val.slice();
-      console.log('d');
     
       if (input.value === '') {
         input.style.fontStyle = 'oblique';
@@ -49,14 +54,14 @@ $(document).ready(function(){
         source_to_show = autocomplete(input_val.split(" "));
         
         for (i = 0; i < source_to_show.length; i++) {
-          autocomplete_results.innerHTML += '<li class="list-group-item"><a>' + source_to_show[i] + '</a></li>';
+          autocomplete_results.innerHTML += '<li class="list-group-item"><a href="./organization.html?org=' + encodeURI(source_to_show[i]) + '" >' + source_to_show[i] + '</a></li>';
           //alert(source_to_show[i]);
         }
         
         //$('#results').css('display', 'block');
     
         $('#results li a').click(function(){
-          input.value = this.text;
+          input.value = "";
         });
     
         

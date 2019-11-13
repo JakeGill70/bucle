@@ -16,27 +16,14 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+    <!-- Handles getting URL parameters -->
+    <script src="getURLparams.js"></script>
+
     <!-- Handles Data Storage -->
     <script src="md5.min.js"></script>
     <script src="dataModel.js"></script>
     <script src="dataStorage.js"></script>
 
-    <!-- Used to create test data -->
-    <!-- TODO: Delete this once real data becomes available -->
-    <script>
-    var tdata = DataStorage.getTestData();
-    tdata.meetings.sort((m1, m2) => {return m2.dateTime.getTime() - m1.dateTime.getTime();});
-    var tdataJSON = DataStorage.toJSON(tdata);
-    console.log(tdata);
-    DataStorage.setData("db", tdataJSON);
-
-    var tdataReturn = DataStorage.fromJSON(DataStorage.getData("db"));
-    console.log(tdataReturn);
-    </script>
-
-    <!-- Handles the auto-complete search box -->
-    <script src="autocomplete-search.js"></script>
-    
   </head>
 
 
@@ -47,25 +34,40 @@
 
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
       <div class="row">
-        <h1>Find your organization</h1>
-      </div>
-
-      <div class="row">
-        <div id="organization-auto-complete" class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2"> 
-          <input id="organization-search-box" class="form-control" type="text" value="" autofocus="true" name="search" placeholder="Organization Name" ></input>
-          <div id="results"> 
-            <div id="autocomplete-results"> </div>
-          </div> 
-        </div>
-      </div>
-
-      <div class="row" style="text-align: center;">
-        <p>BUCLE was developed by Jonah Bouton, Jake Gillenwater, and Jacob Hoyos. BUCLE was developed 
-        with the Unicoi County Commision and the ETSU Faculty Senate in mind. 
-        <br>Special thanks to Dr. Stephen Hendrix and Dr. Jeff Roach for helping create, groom, and analyze
-        the project requirements that made BUCLE possible.</p>
+        <h1>
+          <a href="index.html">BUCLE</a> 
+          | 
+          <script>document.write(decodeURI(getURLparams()["org"]).toUpperCase());</script>
+        </h1>
       </div>
     </div>
+
+    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+        <div class="row">
+
+          <script>
+          // TODO: Move this so it isn't inline JS
+          
+          var db = DataStorage.fromJSON(DataStorage.getData("db"));
+          var orgNameParam = decodeURI(getURLparams()["org"]).toLocaleLowerCase();
+          var orgName = db.organizations.find(obj => {return obj.name === orgNameParam}).name;
+          
+          var meetings = db.meetings.filter(obj => {return obj.organization === orgName});
+
+          for(let i=0; i < meetings.length; i++){
+            let cardStr = ' <div class="card"><div class="card-body"><span class="card-title">';
+            cardStr += meetings[i].title;
+            cardStr += '</span><span class="card-text"> - ';
+            let meetDate = new Date(meetings[i].dateTime);
+            cardStr += meetDate.toLocaleTimeString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+            cardStr += '</span></div></div>';
+            document.writeln(cardStr);
+          }
+
+          </script>
+
+        </div>
+      </div>
 
   </body>
   
