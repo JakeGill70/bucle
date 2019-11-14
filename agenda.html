@@ -21,14 +21,16 @@
 
     <!-- Handles Data Storage -->
     <script src="md5.min.js"></script>
+    <script src="cookieManager.js"></script>
     <script src="dataModel.js"></script>
     <script src="dataStorage.js"></script>
 
     <script>
+      var db = DataStorage.fromJSON(DataStorage.getData("db"));
+      var orgName = decodeURI(getURLparams()["org"]);
+      var meetingID = decodeURI(getURLparams()["meeting"]);
+      
       $(document).ready(function(){
-        var db = DataStorage.fromJSON(DataStorage.getData("db"));
-        var orgName = decodeURI(getURLparams()["org"]);
-        var meetingID = decodeURI(getURLparams()["meeting"]);
 
         // Create breadcrumbs
         // BUCLE
@@ -64,6 +66,26 @@
         agendaStr += '</ol>';
         document.getElementById("itemsRow").innerHTML = agendaStr;
       });
+
+      function login(){
+        let email = document.getElementById("login-email-modal").value;
+        let password = document.getElementById("login-password-modal").value;
+
+        let user = db.users.find(obj => {return obj.emailAddress === email;});
+        console.log(db.users);
+        console.log(user);
+        console.log(email);
+        console.log(password);
+        if(user == undefined || user.password !== password){
+          //$("login-fail").show();
+          document.getElementById("login-fail").style.display = "block";
+        }
+        else{
+          //$("login-btn-modal").modal("toggle");
+          window.location.assign("agenda-live.html?org="+getURLparams()["org"]+"&meeting="+getURLparams()["meeting"]);
+          CookieManager.setCookie("user", DataStorage.toJSON(user), 0.25);
+        }
+      }
     </script>
 
   </head>
