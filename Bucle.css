@@ -18,8 +18,31 @@
     font-size: 18px;
 }
 
+.Navbar {
+ background-color: #00b7fa;
+}
+
+.nav-link{
+  color: white;
+  font-size: 32px;
+  font-style: italic;
+  font-weight: bold;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+.subnav-link{
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+a:hover{
+  text-decoration: none;
+  cursor: pointer;
+}
 body{
-    background-color: #041E42;   
+    background-color: #041E42;
 }
 
 .row{
