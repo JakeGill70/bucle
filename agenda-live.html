@@ -21,6 +21,7 @@
 
     <!-- Handles Data Storage -->
     <script src="md5.min.js"></script>
+    <script src="cookieManager.js"></script>
     <script src="dataModel.js"></script>
     <script src="dataStorage.js"></script>
 
@@ -77,7 +78,12 @@
         let itemId = db.items.find(obj => {return obj.content === itemContent;}).id;
         let motionContent = document.getElementById("motion-content").value;
         let motionRequiresVote = document.getElementById("motion-RequiresVote");
-        let m = new Motion(itemId, db.users[0].id, db.users[1].id, motionContent, motionRequiresVote);
+        let proposer = DataStorage.fromJSON(CookieManager.getCookie("user")).id
+        let seconder = db.users[Math.floor(Math.random()*myArray.length)];
+        while (proposer == seconder){
+          seconder = db.users[Math.floor(Math.random()*myArray.length)];
+        }
+        let m = new Motion(itemId, proposer, seconder, motionContent, motionRequiresVote);
         db.motions.push(m);
         DataStorage.setData("db", DataStorage.toJSON(db));
         location.reload();
