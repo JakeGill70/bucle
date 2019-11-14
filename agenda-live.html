@@ -71,7 +71,7 @@
           motionItemsStr += '<option>' + items[i].content + "</option>";
         }
         document.getElementById("motion-modal-items").innerHTML = motionItemsStr;
-      });
+      })
 
       function addMotion(){
         let itemContent = document.getElementById("motion-modal-items").value;
@@ -87,6 +87,19 @@
         db.motions.push(m);
         DataStorage.setData("db", DataStorage.toJSON(db));
         location.reload();
+      }
+
+      window.onkeypress = function(evt){
+        
+        if (event.keyCode == 48) {
+          // do a function
+          $("#secondMotion-modal").modal("show");
+        }
+
+        if (event.keyCode == 49) {
+          // do a function
+          $("#vote-modal").modal("show");
+        }
       }
     </script>
 
@@ -149,5 +162,65 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Second Motion -->
+  <div class="modal fade" id="secondMotion-modal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Modal Window Title -->
+          <h4 class="modal-title">Second a Motion</h4>
+        </div>
+        <!-- Modal Window Body -->
+        <div class="modal-body">
+          <form class="form-group" id="addMotionForm">
+            <label id>Proposed By: </label>
+            <span id="secondMotion-motion-modal"> Marc Maron</span><br>
+            <label id>Item: </label> Hat purchase<br>
+            <span id="secondMotion-item-modal"></span>
+            <label id>Motion: </label><br><span>Recognize that our hats should be blue.</span>
+            <span id="secondMotion-motion-modal"></span>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Dismiss</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="">Approve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vote Motion -->
+  <div class="modal fade" id="vote-modal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal Window Title -->
+            <h4 class="modal-title">Vote on Motion</h4>
+          </div>
+          <!-- Modal Window Body -->
+          <div class="modal-body">
+            <form class="form-group" id="addMotionForm">
+              <label id>Proposed By: </label>
+              <span id="vote-motion-modal"> Marc Maron</span><br>
+              <label id>Seconded By: </label>
+              <span id="vote-motion-modal"> Robin Williams</span><br>
+              <label id>Item: </label> Hat purchase<br>
+              <span id="vote-item-modal"></span>
+              <label id>Motion: </label><br><span>Approve $500 budget for blue hats.</span>
+              <span id="vote-motion-modal"></span>
+              <hr>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">YES</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">NO</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">PRESENT</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </html>
