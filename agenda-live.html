@@ -31,7 +31,7 @@
       var meetingID = decodeURI(getURLparams()["meeting"]);
       
       $(document).ready(function(){
-
+        
         // Create breadcrumbs
         // BUCLE
         document.getElementById("bucleCrumb").innerHTML = '<a href="index.html">BUCLE</a>';
@@ -57,7 +57,7 @@
 
             agendaStr += '<li>' + motions[c].content;
 
-            agendaStr += '<ul><li> Motion proposed by: ' + motionedBy.fullName; 
+            agendaStr += '<ul><li>Motion proposed by: ' + motionedBy.fullName; 
             agendaStr += '</li><li>Motion seconded by: ' + secondedBy.fullName; 
             agendaStr += '</li></ul></li>';
           }
@@ -65,26 +65,28 @@
         }
         agendaStr += '</ol>';
         document.getElementById("itemsRow").innerHTML = agendaStr;
+
+        var motionItemsStr = "";
+        for(let i=0; i < items.length; i++){
+          motionItemsStr += '<option>' + items[i].content + "</option>";
+        }
+        document.getElementById("motion-modal-items").innerHTML = motionItemsStr;
       });
 
-      function login(){
-        let email = document.getElementById("login-email-modal").value;
-        let password = document.getElementById("login-password-modal").value;
-
-        let user = db.users.find(obj => {return obj.emailAddress === email;});
-        console.log(db.users);
-        console.log(user);
-        console.log(email);
-        console.log(password);
-        if(user == undefined || user.password !== password){
-          //$("login-fail").show();
-          document.getElementById("login-fail").style.display = "block";
+      function addMotion(){
+        let itemContent = document.getElementById("motion-modal-items").value;
+        let itemId = db.items.find(obj => {return obj.content === itemContent;}).id;
+        let motionContent = document.getElementById("motion-content").value;
+        let motionRequiresVote = document.getElementById("motion-RequiresVote");
+        let proposer = DataStorage.fromJSON(CookieManager.getCookie("user")).id
+        let seconder = db.users[Math.floor(Math.random()*myArray.length)];
+        while (proposer == seconder){
+          seconder = db.users[Math.floor(Math.random()*myArray.length)];
         }
-        else{
-          //$("login-btn-modal").modal("toggle");
-          window.location.assign("agenda-live.html?org="+getURLparams()["org"]+"&meeting="+getURLparams()["meeting"]);
-          CookieManager.setCookie("user", DataStorage.toJSON(user), 0.25);
-        }
+        let m = new Motion(itemId, proposer, seconder, motionContent, motionRequiresVote);
+        db.motions.push(m);
+        DataStorage.setData("db", DataStorage.toJSON(db));
+        location.reload();
       }
     </script>
 
@@ -106,15 +108,9 @@
 
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
       <div id="actionRow" class="row" style="text-align: center;">
-          <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#makeMotion-modal">Login</button> -->
-          <a data-toggle="modal" data-target="#login-modal">ARE YOU A MEMBER? CLICK HERE TO LOGIN</a>
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#makeMotion-modal">Make Motion</button>
       </div>
     </div>
-
-    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
-        <div id="videoRow" class="row" style="text-align: center;">
-            <iframe height="315" width="560" src="https://www.youtube.com/embed/zUpTJg2EBpw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        </div>
-      </div>
 
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
         <div id="itemsRow" class="row">
@@ -124,27 +120,31 @@
 
   </body>
 
-  <!-- Login Modal -->
-  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <!-- Make Motion -->
+  <div class="modal fade" id="makeMotion-modal" role="dialog">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Modal Window Title -->
+          <h4 class="modal-title">Make a Motion</h4>
         </div>
+        <!-- Modal Window Body -->
         <div class="modal-body">
-            <div id="login-fail" class="alert alert-danger" style="display: none;">Email or Password is Incorrect</div>
-          <form class="form-group">
-            <label>Email:</label><br>
-            <input id="login-email-modal" type="text" name="email" class="form-control"><br>
-            <label>Password:</label><br>
-            <input id="login-password-modal" type="password" name="Password" class="form-control">
+          <form class="form-group" id="addMotionForm">
+            <label>Item </label><br>
+            <select id="motion-modal-items">
+            </select>
+            <br>
+            <label>Requires Vote <input id="motion-RequiresVote" type="checkbox" value="requiresVote"></label>
+            <br>
+            <label>Content </label>
+            <textarea style="max-width:100%; min-width:100%; min-height:3em; max-height:30em;" class="form-control" rows="5" id="motion-content"></textarea>
+            
           </form>
         </div>
         <div class="modal-footer">
-          <button id="login-btn-modal" type="button" class="btn btn-default" onclick="login()">Login</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addMotion()">Make Motion</button>
         </div>
       </div>
     </div>
