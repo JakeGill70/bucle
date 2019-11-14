@@ -52,6 +52,6 @@ function User(organization, firstName, lastName, emailAddress, password){
     this.fullName = (this.firstName + " " + this.lastName),
     this.emailAddress = emailAddress,
     this.password = password,
-    this.id = (md5(this.fullName + this.emailAddress))
+    this.id = (md5(this.fullName + this.emailAddress)),
     this.userRole = "member"
 };
