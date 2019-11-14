@@ -94,7 +94,11 @@
         if (event.keyCode == 48) {
           // do a function
           $("#secondMotion-modal").modal("show");
-          alert("0");
+        }
+
+        if (event.keyCode == 49) {
+          // do a function
+          $("#vote-modal").modal("show");
         }
       }
     </script>
@@ -188,5 +192,35 @@
       </div>
     </div>
   </div>
+
+  <!-- Vote Motion -->
+  <div class="modal fade" id="vote-modal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal Window Title -->
+            <h4 class="modal-title">Vote on Motion</h4>
+          </div>
+          <!-- Modal Window Body -->
+          <div class="modal-body">
+            <form class="form-group" id="addMotionForm">
+              <label id>Proposed By: </label>
+              <span id="vote-motion-modal"> Marc Maron</span><br>
+              <label id>Seconded By: </label>
+              <span id="vote-motion-modal"> Robin Williams</span><br>
+              <label id>Item: </label> Hat purchase<br>
+              <span id="vote-item-modal"></span>
+              <label id>Motion: </label><br><span>Approve $500 budget for blue hats.</span>
+              <span id="vote-motion-modal"></span>
+              <hr>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">YES</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">NO</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">PRESENT</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </html>
