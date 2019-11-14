@@ -36,7 +36,9 @@
 
     <!-- Handles the auto-complete search box -->
     <script src="autocomplete-search.js"></script>
-    
+
+    <!--navbar generator-->
+    <script src="Navbar.js"></script>
   </head>
 
 
@@ -51,24 +53,24 @@
       </div>
 
       <div class="row">
-        <div id="organization-auto-complete" class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2"> 
+        <div id="organization-auto-complete" class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
           <input id="organization-search-box" class="form-control" type="text" value="" autofocus="true" name="search" placeholder="Organization Name" ></input>
-          <div id="results"> 
+          <div id="results">
             <div id="autocomplete-results"> </div>
-          </div> 
+          </div>
         </div>
       </div>
 
       <div class="row" style="text-align: center;">
-        <p>BUCLE was developed by Jonah Bouton, Jake Gillenwater, and Jacob Hoyos. BUCLE was developed 
-        with the Unicoi County Commision and the ETSU Faculty Senate in mind. 
+        <p>BUCLE was developed by Jonah Bouton, Jake Gillenwater, and Jacob Hoyos. BUCLE was developed
+        with the Unicoi County Commision and the ETSU Faculty Senate in mind.
         <br>Special thanks to Dr. Stephen Hendrix and Dr. Jeff Roach for helping create, groom, and analyze
         the project requirements that made BUCLE possible.</p>
       </div>
     </div>
 
   </body>
-  
+
   <!-- Button trigger modal -->
   <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#test-modal">Open Small Modal</button> -->
   <!-- Test Modal -->
@@ -91,4 +93,30 @@
     </div>
   </div>
 
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            Username:<br>
+            <input type="text" name="Username"><br>
+            password:<br>
+            <input type="password" name="Password">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </html>
