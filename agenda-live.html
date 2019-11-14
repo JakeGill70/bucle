@@ -77,8 +77,8 @@
         let itemId = db.items.find(obj => {return obj.content === itemContent;}).id;
         let motionContent = document.getElementById("motion-content").value;
         let motionRequiresVote = document.getElementById("motion-RequiresVote");
-        let m = new Motion(itemId, undefined, undefined, motionContent, motionRequiresVote);
-        db.motions.addMotion(m);
+        let m = new Motion(itemId, db.users[0].id, db.users[1].id, motionContent, motionRequiresVote);
+        db.motions.push(m);
         DataStorage.setData("db", DataStorage.toJSON(db));
         location.reload();
       }
