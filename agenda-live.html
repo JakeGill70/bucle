@@ -71,7 +71,7 @@
           motionItemsStr += '<option>' + items[i].content + "</option>";
         }
         document.getElementById("motion-modal-items").innerHTML = motionItemsStr;
-      });
+      })
 
       function addMotion(){
         let itemContent = document.getElementById("motion-modal-items").value;
@@ -87,6 +87,15 @@
         db.motions.push(m);
         DataStorage.setData("db", DataStorage.toJSON(db));
         location.reload();
+      }
+
+      window.onkeypress = function(evt){
+        
+        if (event.keyCode == 48) {
+          // do a function
+          $("#secondMotion-modal").modal("show");
+          alert("0");
+        }
       }
     </script>
 
