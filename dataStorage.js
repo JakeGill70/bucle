@@ -12,6 +12,9 @@ var DataStorage = {
 
         // Create organizations
         organizations.push(new Organization("etsu faculty senate"));
+        organizations.push(new Organization("etsu acm"));
+        organizations.push(new Organization("etsu chess club"));
+        organizations.push(new Organization("unicoi county commission"));
 
         // Create users
         var chairperson = new User(organizations[0].name, "Stephen",  "Hendrix",      "hendrixs@etsu.edu",        "password1");
