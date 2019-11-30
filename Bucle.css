@@ -25,3 +25,25 @@ body{
 .row{
     margin:0.5em;
 }
+
+.navbar {
+    /* background-color: #00b7fa; */
+}
+
+.navbar-brand
+{
+    font-size: 32px;
+    font-style: italic;
+    font-weight: bold;
+}
+.subnav-link{
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
