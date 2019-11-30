@@ -27,23 +27,22 @@
 
     <script>
       var db = DataStorage.fromJSON(DataStorage.getData("db"));
-      var orgName = decodeURI(getURLparams()["org"]);
       var meetingID = decodeURI(getURLparams()["meeting"]);
+      var meetingName = db.meetings.find(obj => {return obj.id === meetingID}).title.toUpperCase();
+
+      var orgName = decodeURI(getURLparams()["org"]).toLocaleLowerCase();
+      if(orgName.charAt(orgName.length-1) == "#"){
+        orgName = orgName.slice(0,-1);
+      }
       
       $(document).ready(function(){
 
-        // Create breadcrumbs
-        // BUCLE
-        document.getElementById("bucleCrumb").innerHTML = '<a href="index.html">BUCLE</a>';
-        // Organization
-        var orgStr = '<a href="./organization.html?org=' + orgName.toLowerCase() + '">';
-        orgStr += orgName.toUpperCase() + '</a>';
-        document.getElementById("orgNameCrumb").innerHTML = orgStr;
-        // Meeting
-        var meetingNameStr = db.meetings.find(obj => {return obj.id === meetingID}).title.toUpperCase();
-        document.getElementById("meetingNameCrumb").innerHTML = meetingNameStr;
-
         // Agenda
+        populateAgendaPage();
+
+      });
+
+      function populateAgendaPage(){
         var agenda = db.agendas.find(obj => {return obj.meetingID === meetingID});
         var items = db.items.filter(obj => {return obj.agendaID === agenda.id});
         let agendaStr = '<ol>';
@@ -65,7 +64,8 @@
         }
         agendaStr += '</ol>';
         document.getElementById("itemsRow").innerHTML = agendaStr;
-      });
+
+      }
 
       function login(){
         let email = document.getElementById("login-email-modal").value;
@@ -96,13 +96,49 @@
       <strong>We're sorry but bucle doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
 
-    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
-      <div class="row">
-        <h1>
-          <span id="bucleCrumb"></span> | <span id="orgNameCrumb"></span> | <span id="meetingNameCrumb"></span>
-        </h1>
-      </div>
-    </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+              <a class="navbar-brand" href="index.html">BUCLE</a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+          </div>
+  
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li>
+                <script>
+                  let orgLink = '<a href="./organization.html?org=';
+                  orgLink += encodeURI(orgName.toLocaleLowerCase());
+                  orgLink += '">'
+                  orgLink += orgName.toUpperCase();
+                  document.write(orgLink);
+                </script></a>
+              </li>
+              <li class="active">
+                  <script>
+                    let meetingLink = '<a href="./agenda.html?org=';
+                    meetingLink += encodeURI(orgName.toLocaleLowerCase());
+                    meetingLink += '&meeting='
+                    meetingLink += encodeURI(meetingID);
+                    meetingLink += '">'
+                    meetingLink += meetingName.toUpperCase();
+                    document.write(meetingLink);
+                  </script>
+                  <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+  
+            <ul class="nav navbar-nav navbar-right">
+                <li><a data-toggle="modal" data-target="#login-modal">SIGN IN WITH THIS ORGANIZATION</a></li>
+              </ul>
+          </div>
+      </nav>
+  
 
     <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
       <div id="actionRow" class="row" style="text-align: center;">
