@@ -71,32 +71,25 @@
         </div>
     </nav>
 
-    <div class="container col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
-        <div class="row">
+    <script>
+    // TODO: Move this so it isn't inline JS
+      var db = DataStorage.fromJSON(DataStorage.getData("db"));
+      var meetings = db.meetings.filter(obj => {return obj.organization === orgName});
 
-          <script>
-          // TODO: Move this so it isn't inline JS
-          
-          var db = DataStorage.fromJSON(DataStorage.getData("db"));
-          
-          var meetings = db.meetings.filter(obj => {return obj.organization === orgName});
+      let listStr = '<ul class="list-group col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">';
+      for( let i = 0; i <meetings.length; i++){
+        listStr += '<li class="list-group-item">';
+        listStr += '<a href="./agenda.html?org=' + encodeURI(orgName) + '&meeting=' + meetings[i].id + '">';
+        listStr += '<span class="meeting-title">' + meetings[i].title + '</span>';
+        listStr += ' - ';
+        let meetDate = new Date(meetings[i].dateTime);
+        listStr += meetDate.toLocaleTimeString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+        listStr += '</a></li>';
+      }
+      listStr += '</ul>'
+      document.write(listStr);
 
-          for(let i=0; i < meetings.length; i++){
-            let cardStr = ' <div class="card"><div class="card-body"><span class="card-title">';
-            // ./organization.html?org=' + encodeURI(source_to_show[i])
-            cardStr += '<a href="./agenda.html?org=' + encodeURI(orgName) + '&meeting=' + meetings[i].id + '">';
-            cardStr += meetings[i].title;
-            cardStr += '</a></span><span class="card-text"> - ';
-            let meetDate = new Date(meetings[i].dateTime);
-            cardStr += meetDate.toLocaleTimeString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
-            cardStr += '</span></div></div>';
-            document.writeln(cardStr);
-          }
-
-          </script>
-
-        </div>
-      </div>
+    </script>
 
   </body>
   
