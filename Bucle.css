@@ -1,6 +1,6 @@
 .container{
-    background-color: #A2AAAD;
-    border-radius: 2em;
+    background-color: #F8F8F8;
+    border-radius: 0.5em;
     margin-top:1em;
 }
 
@@ -18,8 +18,25 @@
     font-size: 18px;
 }
 
+.meeting-title{
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.list-group{
+    padding:0px;
+}
+
 body{
-    background-color: #041E42;   
+    /* background-color: #041E42;   */
+    background-image: linear-gradient(rgb(25, 94, 190), #041E42);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html{
+    height: 100%;
 }
 
 .row{
@@ -35,15 +52,4 @@ body{
     font-size: 32px;
     font-style: italic;
     font-weight: bold;
-}
-.subnav-link{
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding-left: 1%;
-    padding-right: 1%;
-}
-a:hover{
-    text-decoration: none;
-    cursor: pointer;
 }
