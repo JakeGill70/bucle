@@ -71,8 +71,7 @@
       })
 
       function submitVote(voteResponse){
-        $("#vote-confirm-modal-vote").html += "You voted " + voteResponse;
-        document.getElementById("vote-confirm-modal-vote").innerHTML += "You voted " + voteResponse;
+        document.getElementById("vote-confirm-modal-vote").innerHTML = "You voted " + voteResponse;
         $("#vote-confirm-modal").modal("show");
       }
 
@@ -97,16 +96,50 @@
         location.reload();
       }
 
+      function newMotionModal(){
+        //TODO
+      }
+
+      function secondMotionModal(){
+        $("#secondMotion-modal").modal("show");
+      }
+
+      function voteModal(){
+        $("#vote-modal").modal("show");
+      }
+
+      function voteConfirmationModal(){
+        $("#vote-confirm-modal").modal("show");
+      }
+
+      function voteWaitModal(){
+        $("#vote-wait-modal").modal("show");
+      }
+
+      function voteResultsModal(){
+
+      }
+
       window.onkeypress = function(evt){
-        
+
         if (event.keyCode == 48) {
           // do a function
-          $("#secondMotion-modal").modal("show");
+          secondMotionModal();
         }
 
         if (event.keyCode == 49) {
           // do a function
-          $("#vote-modal").modal("show");
+          voteModal();
+        }
+
+        if (event.keyCode == 50) {
+          // do a function
+          voteConfirmationModal();
+        }
+
+        if (event.keyCode == 51) {
+          // do a function
+          voteWaitModal();
         }
       }
     </script>
@@ -285,7 +318,7 @@
             
             <hr>
                 <button type="button" class="btn btn-block" data-dismiss="modal" onclick="confirmVote('y')">CONFIRM VOTE</button>
-                <button type="button" class="btn btn-block" data-dismiss="modal" onclick="confirmVote('n')">CHANGE VOTE</button>
+                <button type="button" class="btn btn-block" data-dismiss="modal" onclick="voteModal()">CHANGE VOTE</button>
             </form>
         </div>
       </div>
