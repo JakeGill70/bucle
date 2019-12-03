@@ -70,6 +70,17 @@
         document.getElementById("motion-modal-items").innerHTML = motionItemsStr;
       })
 
+      function submitVote(voteResponse){
+        $("#vote-confirm-modal-vote").html += "You voted " + voteResponse;
+        document.getElementById("vote-confirm-modal-vote").innerHTML += "You voted " + voteResponse;
+        $("#vote-confirm-modal").modal("show");
+      }
+
+      function confirmVote(voteResponse){
+        // TODO: Do something to store the vote response
+        $("#vote-wait-modal").modal("show");
+      }
+
       function addMotion(){
         let itemContent = document.getElementById("motion-modal-items").value;
         let itemId = db.items.find(obj => {return obj.content === itemContent;}).id;
@@ -166,7 +177,7 @@
   </body>
 
   <!-- Make Motion -->
-  <div class="modal fade" id="makeMotion-modal" role="dialog">
+  <div class="modal fade" id="makeMotion-modal" role="dialog" >
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
@@ -226,7 +237,7 @@
   </div>
 
   <!-- Vote Motion -->
-  <div class="modal fade" id="vote-modal" role="dialog">
+  <div class="modal fade" id="vote-modal" role="dialog" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
@@ -246,9 +257,9 @@
               <label id>Motion: </label><br><span>Approve $500 budget for blue hats.</span>
               <span id="vote-motion-modal"></span>
               <hr>
-                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">YES</button>
-                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">NO</button>
-                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="">PRESENT</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="submitVote('YES')">YES</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="submitVote('NO')">NO</button>
+                  <button type="button" class="btn btn-block" data-dismiss="modal" onclick="submitVote('PRESENT')">PRESENT</button>
               </form>
           </div>
         </div>
