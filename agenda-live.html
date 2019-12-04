@@ -77,7 +77,7 @@
 
       function confirmVote(voteResponse){
         // TODO: Do something to store the vote response
-        $("#vote-wait-modal").modal("show");
+        voteWaitModal();
       }
 
       function addMotion(){
@@ -114,11 +114,16 @@
 
       function voteWaitModal(){
         $("#vote-wait-modal").modal("show");
+        setTimeout(function(){
+          $("#vote-wait-modal").modal("hide");
+          voteResultsModal();
+        }, 3000);
       }
 
       function voteResultsModal(){
-
+        $("#vote-results-modal").modal("show");
       }
+      
 
       window.onkeypress = function(evt){
 
@@ -141,6 +146,12 @@
           // do a function
           voteWaitModal();
         }
+
+        if (event.keyCode == 52) {
+          // do a function
+          voteResultsModal();
+        }
+        
       }
     </script>
 
@@ -327,7 +338,7 @@
 
     <!-- Wait on vote -->
   <div class="modal fade" id="vote-wait-modal" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -337,7 +348,33 @@
         <!-- Modal Window Body -->
         <div class="modal-body">
           <label>Please wait until all votes have been submitted</label>
-          <img src="ajax-loader.gif" alt="please wait...">
+          <center><img src="ajax-loader.gif" alt="please wait..."></center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show Vote Results -->
+  <div class="modal fade" id="vote-results-modal" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Modal Window Title -->
+          <h4 class="modal-title">Vote on Motion</h4>
+        </div>
+        <!-- Modal Window Body -->
+        <div class="modal-body">
+          <table width="100%">
+            <tr>
+              <td>YES</td>
+              <td>NO</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>6</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
