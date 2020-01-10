@@ -4,15 +4,37 @@ from flask_socketio import SocketIO, emit
 from threading import Thread, Event
 import time
 from time import sleep
+import psycopg2
+
 
 app = Flask(__name__)
 app.config["TOP_SECRET_KEY"] = "H4SH"
 app.config["DEBUG"] = False
 
+conn, cur = connectDatabase()
+
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
 thread = Thread()
 thread_stop_event = Event()
+
+def connectDatabase():
+    connection = None
+    cursor = None
+    try:
+        connection = psycopg2.connect(user = "Postgres", password = "Batman52", host = "127.0.0.1", port = "5002", database = "postgres");
+        cursor = connection.cursor()
+        print(connection.get_dsn_parameters(), "\n")
+
+        cursor.execute("SELECT version();")
+        record = cursor.fetchone()
+        print("You are connected to - ", record, "\n")
+
+    except (Exception, psycopg2.Error) as error:
+        print("An error occured while attempting to connect to PostgreSQL", error)
+
+    finally:
+        return (connection, cursor)
 
 def randomNumberGenerator():
     while not thread_stop_event.isSet():
@@ -28,6 +50,10 @@ def test():
 @app.route("/hello")
 def hello():
     return "<h1>Hello World</h1><br><i>I've missed you...</i>"
+
+@app.route("/org/create", methods=["POST"])
+def org_create():
+    
 
 @socketio.on("my event")
 def test_message(msg):
