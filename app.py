@@ -11,7 +11,8 @@ app = Flask(__name__)
 app.config["TOP_SECRET_KEY"] = "H4SH"
 app.config["DEBUG"] = False
 
-conn, cur = connectDatabase()
+conn = None
+cursor = None
 
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
@@ -19,22 +20,22 @@ thread = Thread()
 thread_stop_event = Event()
 
 def connectDatabase():
-    connection = None
-    cursor = None
+    _conn = None
+    _cursor = None
     try:
-        connection = psycopg2.connect(user = "Postgres", password = "Batman52", host = "127.0.0.1", port = "5002", database = "postgres");
-        cursor = connection.cursor()
-        print(connection.get_dsn_parameters(), "\n")
+        _conn = psycopg2.connect(user = "Postgres", password = "Batman52", host = "127.0.0.1", port = "5002", database = "postgres");
+        _cursor = _conn.cursor()
+        print(_conn.get_dsn_parameters(), "\n")
 
-        cursor.execute("SELECT version();")
-        record = cursor.fetchone()
+        _cursor.execute("SELECT version();")
+        record = _cursor.fetchone()
         print("You are connected to - ", record, "\n")
 
     except (Exception, psycopg2.Error) as error:
         print("An error occured while attempting to connect to PostgreSQL", error)
 
     finally:
-        return (connection, cursor)
+        return (_conn, _cursor)
 
 def randomNumberGenerator():
     while not thread_stop_event.isSet():
