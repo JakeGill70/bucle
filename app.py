@@ -51,9 +51,16 @@ def test():
 def hello():
     return "<h1>Hello World</h1><br><i>I've missed you...</i>"
 
-@app.route("/org/create", methods=["POST"])
+@app.route("/org/create")
 def org_create():
-    
+    return render_template("org/create.html")
+
+@app.route("/org/create/new", methods=["POST"])
+def org_create_new():
+    orgName = str(request.form["orgName"])
+    country = str(request.form["country"])
+    state = str(request.form["state"])
+    city = str(request.form["city"])
 
 @socketio.on("my event")
 def test_message(msg):
@@ -76,4 +83,5 @@ def test_disconnect():
 
 if __name__ == "__main__":
     print("Starting app...")
+    conn, cursor = connectDatabase()
     app.run(host="0.0.0.0")
